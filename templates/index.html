@@ -1,28 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>CKD Prediction</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
 
 <div class="container">
-    <h2>CKD Prediction System</h2>
+    <h2>🩺 CKD Prediction System</h2>
+    <p class="subtitle">Enter patient details to check kidney condition</p>
 
     <form action="/predict" method="post">
-        <input type="number" step="any" name="sc" placeholder="Serum Creatinine" required>
-        <input type="number" step="any" name="pot" placeholder="Potassium" required>
-        <input type="number" name="dm" placeholder="Diabetes (0/1)" required>
-        <input type="number" name="cad" placeholder="CAD (0/1)" required>
-        <input type="number" step="any" name="bu" placeholder="Blood Urea" required>
-        <input type="number" step="any" name="sod" placeholder="Sodium" required>
-        <input type="number" name="pe" placeholder="Pedal Edema (0/1)" required>
-        <input type="number" name="appet" placeholder="Appetite (0=Good,1=Poor)" required>
 
-        <button type="submit">Predict</button>
+        <div class="input-group">
+            <label>Serum Creatinine</label>
+            <input type="number" step="any" name="sc" placeholder="e.g. 1.2" required>
+        </div>
+
+        <div class="input-group">
+            <label>Potassium</label>
+            <input type="number" step="any" name="pot" placeholder="e.g. 4.5" required>
+        </div>
+
+        <div class="input-group">
+            <label>Blood Urea</label>
+            <input type="number" step="any" name="bu" placeholder="e.g. 40" required>
+        </div>
+
+        <div class="input-group">
+            <label>Sodium</label>
+            <input type="number" step="any" name="sod" placeholder="e.g. 140" required>
+        </div>
+
+        <!-- Dropdowns instead of typing -->
+        <div class="input-group">
+            <label>Diabetes</label>
+            <select name="dm" required>
+                <option value="">Select</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Coronary Artery Disease</label>
+            <select name="cad" required>
+                <option value="">Select</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Pedal Edema</label>
+            <select name="pe" required>
+                <option value="">Select</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Appetite</label>
+            <select name="appet" required>
+                <option value="">Select</option>
+                <option value="0">Good</option>
+                <option value="1">Poor</option>
+            </select>
+        </div>
+
+        <button type="submit">🔍 Predict</button>
     </form>
 
-    <h3>{{ prediction_text }}</h3>
+    <!-- Result Box -->
+    {% if prediction_text %}
+    <div class="result-box">
+        <h3>{{ prediction_text }}</h3>
+    </div>
+    {% endif %}
+
 </div>
 
 </body>
